@@ -1,0 +1,71 @@
+<apex:page Controller="sortingColumnController" sidebar="false">
+<apex:slds />
+<apex:includeScript value="//code.jquery.com/jquery-2.1.1.min.js"/>
+<apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.18.3/js/jquery.tablesorter.js"/>
+<apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.18.3/js/jquery.tablesorter.widgets.js"/>
+<apex:stylesheet value="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.18.3/css/theme.jui.css"/>
+<script>
+    $(document).ready(function(){
+        $("table").tablesorter({
+
+        theme : 'jui', 
+
+        headerTemplate : '{content} {icon}',
+
+        widgets : ['uitheme', 'zebra'],
+ 
+        widgetOptions : {
+          zebra   : ["even", "odd"],
+        }
+
+  });
+    });
+</script>
+<apex:form >
+	
+	<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped slds-table_col-bordered">
+		<thead>
+		    <tr class="slds-text-title_caps">
+		      <th scope="col" onclick="changeSortingIcon()"><div style="position: relative;overflow: visible;margin-top: -1.5%;"  class="slds-truncate" title="Opportunity Name">Account Name
+		      	<div style="margin-left: 26%;margin-top: -3%;">
+		             <apex:image id="upIcon" value="{!$Resource.arrowup_60}" width="14px" height="15px" />          
+				     <apex:image id="downIcon" value="{!$Resource.arrowdown_60}" width="14px" height="15px" />  
+		      	</div>
+		      	</div>
+		      </th>
+		      <th scope="col"><div class="slds-truncate" title="Opportunity Name">Industry</div></th>
+		      <th scope="col"><div class="slds-truncate" title="Opportunity Name">Type</div></th>
+		      <th scope="col"><div class="slds-truncate" title="Opportunity Name">Rating</div></th>
+		    </tr>
+		 </thead>
+      		<apex:repeat value="{!accounts}" var="account"> 
+      			<tr >
+		     	 <th scope="col"><div class="slds-truncate" title="Opportunity Name">{!account.Name}</div></th>
+		     	 <th scope="col"><div class="slds-truncate" title="Opportunity Name">{!account.Industry}</div></th>
+		     	 <th scope="col"><div class="slds-truncate" title="Opportunity Name">{!account.Type}</div></th>
+		     	 <th scope="col"><div class="slds-truncate" title="Opportunity Name">{!account.Rating}</div></th>
+      			</tr>
+      			
+      			
+      
+      		</apex:repeat>
+	</table>
+	<script>
+		function changeSortingIcon() {
+		    var upObj = document.getElementById('j_id0:j_id7:upIcon');
+		    var downObj = document.getElementById('j_id0:j_id7:downIcon');
+		    if(upObj.style.display === 'block' && downObj.style.display === 'block'){
+		    	downObj.style.display = 'block';
+		    }
+		    if (downObj.style.display === 'block') {
+		       	upObj.style.display = 'block';
+		       	downObj.style.display='none';
+			    } 
+		    else {
+		    	downObj.style.display='block';
+		        upObj.style.display = 'none';
+		    }
+		}
+	</script>
+	</apex:form>
+</apex:page>
